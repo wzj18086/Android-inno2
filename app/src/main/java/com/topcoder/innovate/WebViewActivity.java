@@ -16,6 +16,7 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
         WebView mywebview=(WebView) findViewById(webview);
+        //设置webview
         String url=getResources().getString(R.string.baidu);
         mywebview.getSettings().setJavaScriptEnabled(true);
         mywebview.loadUrl(url);

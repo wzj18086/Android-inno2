@@ -10,12 +10,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.topcoder.innovate.model.Listems;
 import com.topcoder.innovate.model.Speaker;
 import com.topcoder.innovate.util.DataRetriever;
 import com.topcoder.innovate.util.new_DataRetriever;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,33 +38,10 @@ public class SpeakerListActivity extends AppCompatActivity {
         String str_1=bundle.getString("value");
         new_DataRetriever myDataRetriever = new new_DataRetriever();
         final List<Speaker> speakerArrayList = myDataRetriever.retrieveAllSpeakers(str_1);
+        Listems test=new Listems(this,n,ids,listems);
+        listems=test.GetListems(speakerArrayList);
 
-        //speakerArrayList=myDataRetriever.retrieveAllSpeakers(str_1);
-
-        List<Map<String, Object>> listems = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < speakerArrayList.size(); i++) {
-            Map<String, Object> listem = new HashMap<String, Object>();
-            listem.put("name", speakerArrayList.get(i).getName());
-            listem.put("title", speakerArrayList.get(i).getTitle());
-
-            String picture_name = speakerArrayList.get(i).getPicture();
-
-            picture_name = picture_name.substring(n, picture_name.length() - 4);
-            picture_name.replaceAll("-", "_");
-            if (Character.isDigit(picture_name.charAt(0)))
-                picture_name = 'x' + picture_name;
-
-            int resID = getResources().getIdentifier(picture_name, "drawable", "com.topcoder.innovate");
-            int default_pic = getResources().getIdentifier("default_speaker", "drawable", "com.topcoder.innovate");
-            if (resID == 0) {
-                listem.put("picture", default_pic);
-                ids.add(default_pic);
-            } else {
-                listem.put("picture", resID);
-                ids.add(resID);
-            }
-            listems.add(listem);
-        }
+        //listems=GetListems(speakerArrayList);
 
         SimpleAdapter simplead = new SimpleAdapter(this, listems,
                 R.layout.activity_listview, new String[]{"name", "title", "picture"},
@@ -133,29 +110,10 @@ public class SpeakerListActivity extends AppCompatActivity {
             int n = 19;
             final ArrayList ids = new ArrayList();
             List<Map<String, Object>> listems = new ArrayList<Map<String, Object>>();
-            for (int i = 0; i < speakerArrayList.size(); i++) {
-                Map<String, Object> listem = new HashMap<String, Object>();
-                listem.put("name", speakerArrayList.get(i).getName());
-                listem.put("title", speakerArrayList.get(i).getTitle());
+            SpeakerListActivity temp=new SpeakerListActivity();
 
-                String picture_name = speakerArrayList.get(i).getPicture();
-
-                picture_name = picture_name.substring(n, picture_name.length() - 4);
-                picture_name.replaceAll("-", "_");
-                if (Character.isDigit(picture_name.charAt(0)))
-                    picture_name = 'x' + picture_name;
-
-                int resID = context.getResources().getIdentifier(picture_name, "drawable", "com.topcoder.innovate");
-                int default_pic = context.getResources().getIdentifier("default_speaker", "drawable", "com.topcoder.innovate");
-                if (resID == 0) {
-                    listem.put("picture", default_pic);
-                    ids.add(default_pic);
-                } else {
-                    listem.put("picture", resID);
-                    ids.add(resID);
-                }
-                listems.add(listem);
-            }
+            Listems test=new Listems(context,n,ids,listems);
+            listems=test.GetListems(speakerArrayList);
 
             SimpleAdapter simplead = new SimpleAdapter(context, listems,
                     R.layout.activity_listview, new String[]{"name", "title", "picture"},

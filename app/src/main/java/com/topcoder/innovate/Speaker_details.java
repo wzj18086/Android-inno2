@@ -13,6 +13,7 @@ public class Speaker_details extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speaker_details);
+        //从speakerlistactivity中获取相关数据
         Intent intent=getIntent();
         Bundle bundle=intent.getExtras();
 

@@ -48,9 +48,8 @@ public class MapActivity extends AppCompatActivity {
         InputStream inputStream = getResources().openRawResource(R.raw.bling);
         String value=getString(inputStream);
         mapArrayList=myMap_DataRetriever.retrieveAllSpeakers(this,value);
+
         BaiduMap mBaiduMap = mMapView.getMap();
-
-
 
         LatLng latLng = new LatLng(37.783753,-122.401192);
         // msu = MapStatusUpdateFactory.newLatLng(latLng);
@@ -59,14 +58,14 @@ public class MapActivity extends AppCompatActivity {
         mBaiduMap.setMapStatus(msu);
         for(int i=0;i <mapArrayList.size();i++) {
             LatLng point = new LatLng(mapArrayList.get(i).getLatitude(), mapArrayList.get(i).getLongitude());
-//构建Marker图标
+            //构建Marker图标
             BitmapDescriptor bitmap = BitmapDescriptorFactory
                     .fromResource(R.drawable.u);
-//构建MarkerOption，用于在地图上添加Marker
+            //构建MarkerOption，用于在地图上添加Marker
             OverlayOptions option = new MarkerOptions()
                     .position(point)
                     .icon(bitmap);
-//在地图上添加Marker，并显示
+            //在地图上添加Marker，并显示
             markerArrayList.add((Marker) mBaiduMap.addOverlay(option));
             Bundle bundle = new Bundle();
             //info必须实现序列化接口
