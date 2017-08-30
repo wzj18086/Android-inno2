@@ -38,7 +38,7 @@ public class Map_DataRetriever {
     List<Map> mapArrayList = new ArrayList<Map>();
     Map myMap;
         try{
-        JSONArray myJsonArray = new JSONArray(value);
+        JSONArray myJsonArray = new JSONArray(value);//将 String对象转换为JSONArray
 
 
         for (int i = 0; i < myJsonArray.length(); i++)
@@ -46,23 +46,22 @@ public class Map_DataRetriever {
             //获取每一个JsonObject对象
             JSONObject myjObject = myJsonArray.getJSONObject(i);
 
-
+            //获取JSONArray中的fields
             JSONObject my_fields = myjObject.getJSONObject("fields");
             myMap = new Map();
-
+            //获取fields中的city
             String my_city = my_fields.getString("city");
             myMap.setName(my_city);
-
+            //获取fields中的name
             String my_name = my_fields.getString("name");
             myMap.setName(my_name);
-
+            //获取fields中的address
             String my_address = my_fields.getString("address");
             myMap.setAddress(my_address);
-
+            //获取fields中的latitude
             double my_latitude = my_fields.getDouble("latitude");
             myMap.setLatitude(my_latitude);
-
-
+            //获取fields中的longitude
             double my_longitude = my_fields.getDouble("longitude");
             myMap.setLongitude(my_longitude);
 

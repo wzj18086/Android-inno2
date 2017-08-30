@@ -110,6 +110,7 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.speakers:
             //点击相关图标后启动SpeakerListActivity
                 Intent i_1 = new Intent(this, SpeakerListActivity.class);
+                //将数据传递给SpeakerListActivity
                 Bundle b = new Bundle();
                 b.putString("value", value);
                 i_1.putExtras(b);

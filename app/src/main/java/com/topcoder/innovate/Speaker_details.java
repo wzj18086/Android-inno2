@@ -16,19 +16,19 @@ public class Speaker_details extends AppCompatActivity {
         //从speakerlistactivity中获取相关数据
         Intent intent=getIntent();
         Bundle bundle=intent.getExtras();
-
+        //获取从speakerlistactivity中传递的的name的值，并用此数据设置ui
         String str_1=bundle.getString("name");
         TextView name=(TextView) findViewById(R.id.name_details);
         name.setText(str_1);
-
+        //获取从speakerlistactivity中传递的的title的值，并用此数据设置ui
         String str=bundle.getString("title");
         TextView title=(TextView)findViewById(R.id.title_details);
         title.setText(str);
-
+        //获取从speakerlistactivity中传递的的details的值，并用此数据设置ui
         String str_2=bundle.getString("details");
         TextView details=(TextView)findViewById(R.id.detail_details);
         details.setText(str_2);
-
+        //获取从speakerlistactivity中传递的的image_id的值，并用此数据设置ui
         int pic_id=bundle.getInt("image_id");
         ImageView picture=(ImageView)findViewById(R.id.pic_details);
         picture.setImageResource(pic_id);

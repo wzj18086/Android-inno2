@@ -1,3 +1,4 @@
+//需要网络时的数据转换
 package com.topcoder.innovate.util;
 
 import android.app.Activity;
@@ -33,36 +34,36 @@ public class DataRetriever {
 
             HttpResponse response = client.execute(get);
             HttpEntity entity = response.getEntity();
-            InputStream is=entity.getContent();
+            InputStream is=entity.getContent();//获取网络文件作为输入文件流
             BufferedReader in=new BufferedReader(new InputStreamReader(is));
             String line=null;
             StringBuffer value=new StringBuffer();
+            //读取网络文件的内容，存储到 StringBuffer对象中
             while((line=in.readLine())!=null){
                 value.append(line);
             }
             Speaker mySpeaker;
+            //将 StringBuffer对象转换为JSONArray
             JSONArray myJsonArray = new JSONArray(value.toString());
 
-
+            //对JSONArray进行解析
             for (int i = 0; i < myJsonArray.length(); i++)
             {
                 //获取每一个JsonObject对象
                 JSONObject myjObject = myJsonArray.getJSONObject(i);
-
-
+                //获取JSONArray中的fields
                 JSONObject my_fields = myjObject.getJSONObject("fields");
                 mySpeaker = new Speaker();
-
+                //获取fields中的name
                 String my_name = my_fields.getString("name");
                 mySpeaker.setName(my_name);
-
+                //获取fields中的title
                 String my_title = my_fields.getString("title");
                 mySpeaker.setTitle(my_title);
-
+                //获取fields中的picture
                 String my_picture = my_fields.getString("picture");
                 mySpeaker.setPicture(my_picture);
-
-
+                //获取fields中的details
                 String my_details = my_fields.getString("details");
                 mySpeaker.setDetails(my_details);
 

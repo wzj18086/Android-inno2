@@ -24,31 +24,32 @@ public class SpeakerListActivity extends AppCompatActivity {
     //DataRetriever myDataRetriever = new DataRetriever();
 
     int n = 19;
-    ArrayList ids = new ArrayList();
+    ArrayList ids = new ArrayList();//存储图片的id
     List<Map<String, Object>> listems = new ArrayList<Map<String, Object>>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speaker_list);
-
+        //接收HomeActivity传递的value数据，即文件的内容
         Intent intent=getIntent();
         Bundle bundle=intent.getExtras();
+        String str_1=bundle.getString("value");//接收HomeActivity传递的value数据，即文件的内容
 
-        String str_1=bundle.getString("value");
-        new_DataRetriever myDataRetriever = new new_DataRetriever();
+        new_DataRetriever myDataRetriever = new new_DataRetriever();//进行数据转换
         final List<Speaker> speakerArrayList = myDataRetriever.retrieveAllSpeakers(str_1);
+
+        //对转换后的数据作进一步处理，设定listview中列表项的内容
         Listems test=new Listems(this,n,ids,listems);
         listems=test.GetListems(speakerArrayList);
 
-        //listems=GetListems(speakerArrayList);
-
+        //用SimpleAdapter设置列表项的内容
         SimpleAdapter simplead = new SimpleAdapter(this, listems,
                 R.layout.activity_listview, new String[]{"name", "title", "picture"},
                 new int[]{R.id.name, R.id.title, R.id.picture});
         ListView list_view = (ListView)this.findViewById(R.id.listView);
         list_view.setAdapter(simplead);
-
+        //对SpeakerListActivity的列表项进行响应
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -57,6 +58,7 @@ public class SpeakerListActivity extends AppCompatActivity {
                 //添加需要响应的操作
                 Intent i_2 = new Intent();
                 i_2.setClass(SpeakerListActivity.this, Speaker_details.class);
+                //将数据传递给Speaker_details
                 Bundle b = new Bundle();
                 b.putString("name", speakerArrayList.get(position).getName());
                 b.putString("title", speakerArrayList.get(position).getTitle());
@@ -83,7 +85,7 @@ public class SpeakerListActivity extends AppCompatActivity {
         }
     }
 
-
+        //若有网络请求时需要进行异步操作，不能在主线程中进行
         class MyTask extends AsyncTask<Void, List<Speaker>, List<Speaker>> {
         //onPreExecute方法用于在执行后台任务前做一些UI操作
         private Activity context;
@@ -111,16 +113,17 @@ public class SpeakerListActivity extends AppCompatActivity {
             final ArrayList ids = new ArrayList();
             List<Map<String, Object>> listems = new ArrayList<Map<String, Object>>();
             SpeakerListActivity temp=new SpeakerListActivity();
-
+            //对转换后的数据作进一步处理，设定listview中列表项的内容
             Listems test=new Listems(context,n,ids,listems);
             listems=test.GetListems(speakerArrayList);
-
+            //用SimpleAdapter设置列表项的内容
             SimpleAdapter simplead = new SimpleAdapter(context, listems,
                     R.layout.activity_listview, new String[]{"name", "title", "picture"},
                     new int[]{R.id.name, R.id.title, R.id.picture});
             ListView list_view = (ListView)context.findViewById(R.id.listView);
             list_view.setAdapter(simplead);
 
+            //对SpeakerListActivity的列表项进行响应
             list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 List<Speaker> newSpeakerList=speakerArrayList;
                 ArrayList new_ids=ids;
@@ -131,6 +134,7 @@ public class SpeakerListActivity extends AppCompatActivity {
                     //添加需要响应的操作
                     Intent i_2 = new Intent();
                     i_2.setClass(context, Speaker_details.class);
+                    //将数据传递给Speaker_details
                     Bundle b = new Bundle();
                     b.putString("name", newSpeakerList.get(position).getName());
                     b.putString("title", newSpeakerList.get(position).getTitle());
